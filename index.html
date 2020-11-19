@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/stylesheet.css" />
     <title>Weather Dashboard</title>
 </head>
-<body>
-<header>
-<h1> Weather Dashboard</h1>
-</header>
 
-<main class="row flex-row justify-space-between">
-    <div class="col-4">
-        <div class="card city-container">
-            <h3 class="card-header">Search for a City:</h3>
-            <form id="city-search" class="card-body">
-            <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input"/>
-            <button type="submit" class="btn"></button>
-            </form>
+<body class="flex-column min-100-vh">
+    <header>
+        <h1> Weather Dashboard</h1>
+    </header>
+
+    <main class="row flex-row justify-space-between">
+        <div class="col-4">
+            <div class="card city-container">
+                <h3 class="card-header">Search for a City:</h3>
+                <form id="city-search" class="card-body">
+                <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input"/>
+                <button type="submit" class="btn"></button>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="col-8" id="weather-container">
-        <div id="current-weather"></div>
-        <div id="forecast"></div>
-        
 
-    </div>
-</main>
+        <div class="col-8" id="weather-container">
+            <div id="current-weather"></div>
+            <div id="forecast"></div>
+        </div>
+    </main>
 
 
 
