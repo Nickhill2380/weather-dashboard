@@ -159,6 +159,15 @@ var fiveDayForecast = function(city){
 
 };
 
+var historySearch = function(event) {
+        var citySearch = event.target.textContent
+
+        getCurrentWeather(citySearch);
+        fiveDayForecast(citySearch);
+
+
+};
+
 var storeCity = function(cityName) {
 
     var cityBtn = document.createElement("btn");
@@ -189,4 +198,5 @@ var loadCity = function () {
 
 loadCity();
 
+cityHistoryEl.addEventListener("click", historySearch)
 citySearchEl.addEventListener("submit", formSubmitHandler);
