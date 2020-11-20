@@ -11,6 +11,7 @@ var formSubmitHandler = function(event) {
 
     if (cityName) {
         getCurrentWeather(cityName);
+        fiveDayForecast(cityName);
         cityNameEl.value="";
     } else {
         alert("Please enter a City name");
@@ -25,7 +26,7 @@ var getCurrentWeather = function(city) {
     .then(function(response){
         if (response.ok)  {
             response.json().then(function(data) {
-                console.log(data);
+                
                 displayCurrentWeather(data);
                 var cityLat = data.coord.lat;
                 var cityLon = data.coord.lon;
@@ -37,7 +38,7 @@ var getCurrentWeather = function(city) {
                     return response.json();
                 })
                 .then(function(response){
-                    console.log(response);
+                    
                     displayUVIndex(response);
                 })
 
@@ -55,7 +56,7 @@ var getCurrentWeather = function(city) {
 var displayCurrentWeather = function(city) {
 
     currentWeatherEl.textContent = "";
-    console.log(city.weather[0].icon)
+    
     var weatherCityEl = document.createElement("h2")
     var weatherIcon = document.createElement("img")
     weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + city.weather[0].icon + ".png");
@@ -101,5 +102,62 @@ var displayUVIndex = function(uvIndex) {
         currentWeatherEl.appendChild(uvIndexEl);
 }
 
+
+var fiveDayForecast = function(city){
+
+    forecastEl.textContent= "";
+
+    fetch(
+        "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
+    )
+    .then(function(response){
+        if (response.ok)  {
+            response.json().then(function(data) {
+                console.log(data);
+                
+                var forecastArray = data.list
+                console.log(forecastArray)
+                var forecastTitleEl = document.createElement("h3");
+                forecastTitleEl.textContent = "5-Day Forecast"
+                forecastTitleEl.classList="card forecast-container"
+
+                forecastEl.appendChild(forecastTitleEl);
+
+            for( var i=0; i < forecastArray.length; i += 8 ) {
+                
+                var forecastCardEl = document.createElement("div");
+                
+                forecastCardEl.classList="card-body";
+
+                forecastEl.appendChild(forecastCardEl)
+
+                var dateEl = document.createElement("h4")
+
+                var forecastDate = forecastArray[i].dt_txt;
+
+                dateEl.textContent = forecastDate.split(" ",1)
+                
+                var iconEl = document.createElement("img")
+                
+                iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + forecastArray[i].weather[0].icon + ".png");
+                
+                var tempEl = document.createElement("p")
+                tempEl.textContent = "Temp: " + forecastArray[i].main.temp + "F";
+
+                var humidityForecastEl = document.createElement("p")
+                humidityForecastEl.textContent= "Humidity: " + forecastArray[i].main.humidity + "%";
+
+                forecastCardEl.appendChild(dateEl);
+                forecastCardEl.appendChild(iconEl);
+                forecastCardEl.appendChild(tempEl);
+                forecastCardEl.appendChild(humidityForecastEl);
+                forecastEl.appendChild(forecastCardEl)
+            }
+        })
+    }
+    
+    })
+
+};
 
 citySearchEl.addEventListener("submit", formSubmitHandler);
