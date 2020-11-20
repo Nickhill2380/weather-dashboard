@@ -3,6 +3,8 @@ var cityNameEl = document.querySelector("#city-name");
 var currentWeatherEl = document.querySelector("#current-weather");
 var forecastEl = document.querySelector("#forecast");
 var apiKey = "ecc3713fcc8bcf9a9b86ba74c250821b"
+var cityHistoryEl = document.querySelector("#city-history");
+var searchHistory = [];
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -12,6 +14,7 @@ var formSubmitHandler = function(event) {
     if (cityName) {
         getCurrentWeather(cityName);
         fiveDayForecast(cityName);
+        storeCity(cityName);
         cityNameEl.value="";
     } else {
         alert("Please enter a City name");
@@ -65,24 +68,21 @@ var displayCurrentWeather = function(city) {
     currentWeatherEl.appendChild(weatherCityEl);
     weatherCityEl.appendChild(weatherIcon);
 
-    var weatherStatsEl = document.createElement("ul");
-        weatherStatsEl.classList = "list-item flex-row justify-space-between align-left";
-
-    var temperatureEl = document.createElement("li");
+    var temperatureEl = document.createElement("p");
         temperatureEl.classList = "list-item flex-row justify-space-between align-left";
         temperatureEl.textContent = "Temperature: " + city.main.temp + " F"; 
 
-    var humidityEl = document.createElement("li");
+    var humidityEl = document.createElement("p");
         humidityEl.classList = "list-item flex-row justify-space-between align-left";
         humidityEl.textContent = "Humidity: " + city.main.humidity + "%";
 
-    var windSpeedEl = document.createElement("li");
+    var windSpeedEl = document.createElement("p");
         windSpeedEl.classList = "list-item flex-row justify-space-between align-left";
         windSpeedEl.textContent = "Wind Speed: " + city.wind.speed + " mph";
 
     
 
-     currentWeatherEl.appendChild(weatherStatsEl);
+     
      currentWeatherEl.appendChild(temperatureEl);
      currentWeatherEl.appendChild(humidityEl);
      currentWeatherEl.appendChild(windSpeedEl);
@@ -95,7 +95,7 @@ var displayCurrentWeather = function(city) {
 
 var displayUVIndex = function(uvIndex) {
 
-    var uvIndexEl = document.createElement("li");
+    var uvIndexEl = document.createElement("p");
         uvIndexEl.classList = "list-item flex-row justify-space-between align-left uv-Index";
         uvIndexEl.textContent = "UV Index: " + uvIndex.value
 
@@ -113,13 +113,12 @@ var fiveDayForecast = function(city){
     .then(function(response){
         if (response.ok)  {
             response.json().then(function(data) {
-                console.log(data);
                 
                 var forecastArray = data.list
-                console.log(forecastArray)
+               
                 var forecastTitleEl = document.createElement("h3");
                 forecastTitleEl.textContent = "5-Day Forecast"
-                forecastTitleEl.classList="card forecast-container"
+                forecastTitleEl.classList="card forecast-container col-12"
 
                 forecastEl.appendChild(forecastTitleEl);
 
@@ -127,7 +126,7 @@ var fiveDayForecast = function(city){
                 
                 var forecastCardEl = document.createElement("div");
                 
-                forecastCardEl.classList="card-body";
+                forecastCardEl.classList="card-body col-2";
 
                 forecastEl.appendChild(forecastCardEl)
 
@@ -159,5 +158,35 @@ var fiveDayForecast = function(city){
     })
 
 };
+
+var storeCity = function(cityName) {
+
+    var cityBtn = document.createElement("btn");
+    cityBtn.textContent = cityName;
+    cityBtn.classList = "col-12"
+
+    cityHistoryEl.appendChild(cityBtn);
+
+    searchHistory.push(cityName);
+
+    localStorage.setItem("cities", JSON.stringify(searchHistory));
+
+}
+
+var loadCity = function () {
+
+    storedSearches = JSON.parse(localStorage.getItem("cities"));
+
+    if (!storedSearches){
+        storedSearches= [];
+    }
+
+    for( var i = 0; i< storedSearches.length; i++) {
+
+        storeCity(storedSearches[i]);
+    }
+};
+
+loadCity();
 
 citySearchEl.addEventListener("submit", formSubmitHandler);
