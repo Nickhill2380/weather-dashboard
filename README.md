@@ -16,6 +16,8 @@ openweathermap api
 ## Website
 Below is a screenshot of https://nickhill2380.github.io/weather-dashboard/
 
+![image](https://user-images.githubusercontent.com/71850826/99863914-74bef280-2b6e-11eb-9860-2024a57d2078.png)
+
 
 ## Credits
 
