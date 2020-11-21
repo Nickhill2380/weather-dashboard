@@ -59,11 +59,17 @@ var getCurrentWeather = function(city) {
 var displayCurrentWeather = function(city) {
 
     currentWeatherEl.textContent = "";
+    var currentTime = city.dt * 1000;
+    var currentDate = new Date(currentTime); 
+    var formattedDate = currentDate.toLocaleString("en-US", {timeZoneName:"short"}).split(",", 1);
+
+    
+    console.log(formattedDate);
     
     var weatherCityEl = document.createElement("h2")
     var weatherIcon = document.createElement("img")
     weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + city.weather[0].icon + ".png");
-    weatherCityEl.textContent= city.name;
+    weatherCityEl.textContent= city.name + " " + formattedDate;
     
     currentWeatherEl.appendChild(weatherCityEl);
     weatherCityEl.appendChild(weatherIcon);
