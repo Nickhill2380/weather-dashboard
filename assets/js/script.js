@@ -23,7 +23,7 @@ var formSubmitHandler = function(event) {
 
 
 var getCurrentWeather = function(city) {
-    var cityWeather = "http://api.openweathermap.org/data/2.5/weather?&units=imperial&q=" + city + "&appid=" + apiKey
+    var cityWeather = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&q=" + city + "&appid=" + apiKey
     
     fetch(cityWeather)
     .then(function(response){
@@ -35,7 +35,7 @@ var getCurrentWeather = function(city) {
                 var cityLon = data.coord.lon;
 
             return fetch(
-                    "http://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey
+                    "https://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey
                 )
                 .then(function(response){
                     return response.json();
@@ -65,7 +65,7 @@ var displayCurrentWeather = function(city) {
     
     var weatherCityEl = document.createElement("h2")
     var weatherIcon = document.createElement("img")
-    weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + city.weather[0].icon + ".png");
+    weatherIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + city.weather[0].icon + ".png");
     weatherCityEl.textContent= city.name + " " + formattedDate;
     
     currentWeatherEl.appendChild(weatherCityEl);
@@ -111,7 +111,7 @@ var fiveDayForecast = function(city){
     forecastEl.textContent= "";
 
     fetch(
-        "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
+        "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
     )
     .then(function(response){
         if (response.ok)  {
@@ -142,7 +142,7 @@ var fiveDayForecast = function(city){
                 
                 var iconEl = document.createElement("img")
                 
-                iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + forecastArray[i].weather[0].icon + ".png");
+                iconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + forecastArray[i].weather[0].icon + ".png");
                 
                 var tempEl = document.createElement("p")
                 tempEl.textContent = "Temp: " + forecastArray[i].main.temp + "\u00B0F";
