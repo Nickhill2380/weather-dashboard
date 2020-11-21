@@ -62,9 +62,6 @@ var displayCurrentWeather = function(city) {
     var currentTime = city.dt * 1000;
     var currentDate = new Date(currentTime); 
     var formattedDate = currentDate.toLocaleString("en-US", {timeZoneName:"short"}).split(",", 1);
-
-    
-    console.log(formattedDate);
     
     var weatherCityEl = document.createElement("h2")
     var weatherIcon = document.createElement("img")
@@ -76,7 +73,7 @@ var displayCurrentWeather = function(city) {
 
     var temperatureEl = document.createElement("p");
         temperatureEl.classList = "list-item flex-row justify-space-between align-left";
-        temperatureEl.textContent = "Temperature: " + city.main.temp + " F"; 
+        temperatureEl.textContent = "Temperature: " + city.main.temp + "\u00B0F"; 
 
     var humidityEl = document.createElement("p");
         humidityEl.classList = "list-item flex-row justify-space-between align-left";
@@ -132,11 +129,12 @@ var fiveDayForecast = function(city){
                 
                 var forecastCardEl = document.createElement("div");
                 
-                forecastCardEl.classList="card-body col-2";
+                forecastCardEl.classList="card-body col-lg-2 col-sm-12 forecast-card";
 
                 forecastEl.appendChild(forecastCardEl)
 
                 var dateEl = document.createElement("h4")
+                dateEl.classList = "forecast-date"
 
                 var forecastDate = forecastArray[i].dt_txt;
 
@@ -147,7 +145,7 @@ var fiveDayForecast = function(city){
                 iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + forecastArray[i].weather[0].icon + ".png");
                 
                 var tempEl = document.createElement("p")
-                tempEl.textContent = "Temp: " + forecastArray[i].main.temp + "F";
+                tempEl.textContent = "Temp: " + forecastArray[i].main.temp + "\u00B0F";
 
                 var humidityForecastEl = document.createElement("p")
                 humidityForecastEl.textContent= "Humidity: " + forecastArray[i].main.humidity + "%";
@@ -178,7 +176,7 @@ var storeCity = function(cityName) {
 
     var cityBtn = document.createElement("btn");
     cityBtn.textContent = cityName;
-    cityBtn.classList = "col-12"
+    cityBtn.classList = "col-12 city-btn"
 
     cityHistoryEl.appendChild(cityBtn);
 
